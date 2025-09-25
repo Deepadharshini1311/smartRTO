@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apply for License</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'rtoapp/style.css' %}">
+</head>
+<body>
+  <div class="apply-license-bg">
+    <div class="apply-license-container">
+      <h2>Apply for License</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>License Details</h3>
+        {{ lform.as_p }}
+        <h3>Application Details</h3>
+        {{ appform.as_p }}
+        <button type="submit" class="btn btn-yellow" style="margin-top:1rem;">Submit License Application</button>
+      </form>
+      <div style="text-align:center; margin-top:2rem;">
+        <a href="{% url 'home' %}" class="btn btn-gray">Return to Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

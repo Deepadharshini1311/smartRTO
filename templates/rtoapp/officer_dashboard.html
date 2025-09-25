@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Officer Dashboard</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'rtoapp/style.css' %}">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1 class="dashboard-title">Officer Dashboard</h1>
+    <div class="dashboard-card">
+      <h3>Pending Applications</h3>
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Document</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in pending_apps %}
+            <tr>
+              <td>{{ app.id }}</td>
+              <td>{{ app.user.username }}</td>
+              <td>{{ app.app_type }}</td>
+              <td>{{ app.status }}</td>
+              <td>{{ app.submission_date }}</td>
+              <td>
+                {% if app.document %}
+                  <a href="{{ app.document.url }}" target="_blank">View</a>
+                  {% if ".jpg" in app.document.url|lower or ".png" in app.document.url|lower or ".jpeg" in app.document.url|lower %}
+                    <br><img src="{{ app.document.url }}" width="100">
+                  {% endif %}
+                {% else %}
+                  None
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'approve_application' app.id %}" class="btn btn-yellow">Approve</a>
+                <a href="{% url 'reject_application' app.id %}" class="btn btn-gray">Reject</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="7">No pending applications.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="{% url 'home' %}" class="btn btn-gray">Return to Home</a>
+    </div>
+  </div>
+</body>
+</html>

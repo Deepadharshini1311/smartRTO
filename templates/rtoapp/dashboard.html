@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dashboard</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'rtoapp/style.css' %}">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2 class="dashboard-title">Dashboard - {{ user.username }}</h2>
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <a href="{% url 'apply_license' %}" class="btn btn-yellow">Apply License</a>
+      </div>
+      <div class="dashboard-card">
+        <a href="{% url 'apply_vehicle' %}" class="btn btn-yellow">Apply Vehicle</a>
+      </div>
+    </div>
+    <div class="dashboard-card">
+      <h3>Your Applications</h3>
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Document</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in apps %}
+            <tr>
+              <td>{{ a.app_type }}</td>
+              <td>{{ a.status }}</td>
+              <td>{{ a.submission_date }}</td>
+              <td>
+                {% if a.document %}
+                  <a href="{{ a.document.url }}" target="_blank">View</a>
+                  {% if ".jpg" in a.document.url|lower or ".png" in a.document.url|lower or ".jpeg" in a.document.url|lower %}
+                    <br><img src="{{ a.document.url }}" width="100">
+                  {% endif %}
+                {% else %}
+                  None
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="4">No applications yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="dashboard-card">
+      <h3>Your Licenses</h3>
+      <ul>
+        {% for l in licenses %}
+          <li>{{ l.license_type }} - {{ l.status }}
+            {% if l.qr_image %}
+              <br><img src="{{ l.qr_image.url }}" width="150">
+            {% endif %}
+          </li>
+        {% empty %}<li>None</li>{% endfor %}
+      </ul>
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="{% url 'home' %}" class="btn btn-gray">Return to Home</a>
+    </div>
+  </div>
+</body>
+</html>

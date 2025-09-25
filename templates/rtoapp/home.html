@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart RTO Home</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'rtoapp/style.css' %}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">Smart RTO</div>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'apply_license' %}">Apply for License</a></li>
+          <li><a href="{% url 'apply_vehicle' %}">Register Vehicle</a></li>
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          {% if user.is_staff %}
+            <li><a href="{% url 'officer_dashboard' %}">Officer</a></li>
+          {% endif %}
+          <li><a href="{% url 'logout' %}" class="btn btn-gray">Logout</a></li>
+        {% else %}
+          <li><a href="{% url 'signup' %}" class="btn btn-yellow">Sign up</a></li>
+          <li><a href="/admin/login/" class="btn btn-gray">Login</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Section 1: Welcome left, image right -->
+  <section class="home-flex">
+    <div class="home-flex-left">
+      <h1>Welcome to Smart RTO</h1>
+      <p>Streamline your vehicle registration and license applications with ease and efficiency.<br>
+        Effortlessly manage all your vehicle and license needs in one place. Our platform streamlines
+        the process for citizens and officers, making registration, application, and approvals faster 
+        and more transparent.</p>
+    </div>
+    <div class="hero-buttons">
+      <a href="{% url 'apply_license' %}" class="btn btn-yellow">Apply License</a>
+      <a href="{% url 'apply_vehicle' %}" class="btn btn-gray">Register Vehicle</a>
+    </div>
+    <div class="home-flex-right">
+      <img src="{% static 'rtoapp/images/rtoimg.png' %}" alt="Vehicle Banner" class="home-img">
+    </div>
+  </section>
+
+
+  <!-- Section 2: Image left, Key Features right -->
+  <section class="home-flex">
+    <div class="home-flex-left">
+      <img src="{% static 'rtoapp/images/features.jpg' %}" alt="Key Features" class="home-img">
+    </div>
+    <div class="home-flex-right">
+      <h3>Key Features:</h3>
+      <ul>
+        <li>Apply for a new driving license online</li>
+        <li>Register your vehicle with ease</li>
+        <li>Track application status in real-time</li>
+        <li>Officer dashboard for quick approvals and management</li>
+        <li>Secure login and user-friendly interface</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section 3: Why Choose left, image right -->
+  <section class="home-flex">
+    <div class="home-flex-left">
+      <h3>Why Choose Smart RTO?</h3>
+      <ul>
+        <li>Save time with online applications</li>
+        <li>Reduce paperwork and manual processes</li>
+        <li>Enhance transparency and communication</li>
+        <li>Access services anytime, anywhere</li>
+      </ul>
+    </div>
+    <div class="home-flex-right">
+      <img src="{% static 'rtoapp/images/choose.jpg' %}" alt="Why Choose" class="home-img">
+    </div>
+  </section>
+
+  <!-- Section 4: Centered Get Started -->
+  <section class="home-center">
+    <h2><i>Get Started Today!</i></h2>
+  </section>
+
+</body>
+</html>
